@@ -1,10 +1,12 @@
 package com.epita.mti.velibs;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,10 +20,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
+        private ImageView iconImageView;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             nameTextView = (TextView) itemView.findViewById(R.id.velib_name);
+            iconImageView = (ImageView) itemView.findViewById(R.id.velib_icon);
         }
     }
 
@@ -40,6 +44,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(MyAdapter.ViewHolder holder, final int position) {
         holder.nameTextView.setText(mDataset.get(position).getFields().getName());
+        setIcon(holder.iconImageView, mDataset.get(position).getFields().getStatus());
 
         holder.nameTextView.setOnClickListener(new View.OnClickListener() {
 
@@ -55,5 +60,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return mDataset == null ? 0 : mDataset.size() ;
+    }
+
+    private void setIcon(ImageView imageView, String status) {
+        if (status.equals("OPEN")) {
+            imageView.setImageResource(R.drawable.ic_check_circle);
+            imageView.setColorFilter(Color.GREEN);
+        }
+        else {
+            imageView.setImageResource(R.drawable.ic_remove_circle);
+            imageView.setColorFilter(Color.RED);
+        }
     }
 }
