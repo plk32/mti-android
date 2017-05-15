@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Velibs</string>
+    <string name="VelibName">Nom : </string>
+    <string name="VelibStatus">Etat : </string>
+    <string name="VelibBikes">Emplacements de Vélos : </string>
+    <string name="VelibAvBikes">Emplacements de Vélos disponibles : </string>
+    <string name="VelibAddress">Adresse : </string>
+    <string name="VelibLastUpdate">Dernière mise à jour : </string>
 </resources>

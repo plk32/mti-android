@@ -4,10 +4,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Lorris on 12/05/2017.
@@ -20,7 +25,7 @@ public class PlaceholderFragment extends Fragment {
         Bundle args = new Bundle();
         args.putString("name", velib.getFields().getName());
         args.putString("status", velib.getFields().getStatus());
-        args.putString("bike_stands", String.valueOf(velib.getFields().getBike_stands()));
+        args.putString("stands", String.valueOf(velib.getFields().getBike_stands()));
         args.putString("available_stands", String.valueOf(velib.getFields().getAvailable_bike_stands()));
         args.putString("address", velib.getFields().getAddress());
         args.putString("last_update", velib.getFields().getLastUpdate());
@@ -33,20 +38,21 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_for_view_pager, container, false);
-        final String address = getArguments().getString("address");
 
-        TextView textViewName = (TextView) rootView.findViewById(R.id.name);
-        textViewName.setText(getArguments().getString("name"));
-        TextView textViewStatus = (TextView) rootView.findViewById(R.id.status);
-        textViewStatus.setText(getArguments().getString("status"));
-        TextView textViewStands = (TextView) rootView.findViewById(R.id.stands);
-        textViewStands.setText(getArguments().getString("bike_stands"));
-        TextView textViewAvStands = (TextView) rootView.findViewById(R.id.available_stands);
-        textViewAvStands.setText(getArguments().getString("available_stands"));
-        TextView textViewAddress = (TextView) rootView.findViewById(R.id.address);
-        textViewAddress.setText(address);
+        final String address = getArguments().getString("address");
+        String last_update = getArguments().getString("last_update");
+        String format_date = ConvertDate(last_update);
+
+        SetTextView(rootView, R.id.name, "name");
+        SetTextView(rootView, R.id.status, "status");
+        SetTextView(rootView, R.id.stands, "stands");
+        SetTextView(rootView, R.id.available_stands, "available_stands");
+        SetTextView(rootView, R.id.address, "address");
+
         TextView textViewUpdate = (TextView) rootView.findViewById(R.id.last_update);
-        textViewUpdate.setText(getArguments().getString("last_update"));
+        String value = textViewUpdate.getText() + " " + format_date;
+        textViewUpdate.setText(value);
+        TextView textViewAddress = (TextView) rootView.findViewById(R.id.address);
 
         textViewAddress.setOnClickListener(new View.OnClickListener() {
 
@@ -60,5 +66,30 @@ public class PlaceholderFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    private void SetTextView(View rootView, int TextId, String tag) {
+        Bundle args = getArguments();
+        TextView textView = (TextView) rootView.findViewById(TextId);
+        String value = textView.getText() + " " + args.getString(tag);
+        textView.setText(value);
+    }
+
+    private String ConvertDate(String last_update) {
+        SimpleDateFormat inFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        SimpleDateFormat outFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+        String outputDate  = new String();
+
+        Date convertedDate = new Date();
+        try {
+            convertedDate = inFormat.parse(last_update);
+            outputDate  = outFormat.format(convertedDate);
+            Log.e("CONVERTDATE", convertedDate.toString());
+            Log.e("NEWDATE", outputDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return outputDate;
     }
 }

@@ -6,30 +6,36 @@
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/VelibName"/>
 
     <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/VelibStatus"/>
 
     <TextView
         android:id="@+id/stands"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/VelibBikes"/>
 
     <TextView
         android:id="@+id/available_stands"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/VelibAvBikes"/>
 
     <TextView
         android:id="@+id/address"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/VelibAddress"/>
 
     <TextView
         android:id="@+id/last_update"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/VelibLastUpdate"/>
 </LinearLayout>
