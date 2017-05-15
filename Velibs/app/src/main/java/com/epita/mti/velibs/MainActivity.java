@@ -50,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         OpenDataService openDataService = retrofit.create(OpenDataService.class);
 
-        //Call<List<Velib>> velibList = openDataService.listVelibs();
         Call<VelibResponse> responseCall = openDataService.getResponse();
-        //velibList.enqueue(new Callback<List<Velib>>() {
         responseCall.enqueue(new Callback<VelibResponse>() {
             @Override
             public void onResponse(Call<VelibResponse> call, Response<VelibResponse> response) {

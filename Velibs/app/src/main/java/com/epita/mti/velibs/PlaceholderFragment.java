@@ -1,5 +1,7 @@
 package com.epita.mti.velibs;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,6 +33,8 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_for_view_pager, container, false);
+        final String address = getArguments().getString("address");
+
         TextView textViewName = (TextView) rootView.findViewById(R.id.name);
         textViewName.setText(getArguments().getString("name"));
         TextView textViewStatus = (TextView) rootView.findViewById(R.id.status);
@@ -40,9 +44,21 @@ public class PlaceholderFragment extends Fragment {
         TextView textViewAvStands = (TextView) rootView.findViewById(R.id.available_stands);
         textViewAvStands.setText(getArguments().getString("available_stands"));
         TextView textViewAddress = (TextView) rootView.findViewById(R.id.address);
-        textViewAddress.setText(getArguments().getString("address"));
+        textViewAddress.setText(address);
         TextView textViewUpdate = (TextView) rootView.findViewById(R.id.last_update);
         textViewUpdate.setText(getArguments().getString("last_update"));
+
+        textViewAddress.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + address);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                v.getContext().startActivity(mapIntent);
+            }
+        });
+
         return rootView;
     }
 }
