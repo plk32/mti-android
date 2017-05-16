@@ -6,4 +6,7 @@
     <string name="VelibAvBikes">Emplacements de Vélos disponibles : </string>
     <string name="VelibAddress">Adresse : </string>
     <string name="VelibLastUpdate">Dernière mise à jour : </string>
+    <string name="credits">Credits</string>
+    <string name="share">Share on ..</string>
+    <string name="search">Search</string>
 </resources>
