@@ -56,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
             mAdapter = new MyAdapter();
             mRecyclerView.setAdapter(mAdapter);
         }
+        else {
+            Toast.makeText(
+                    MainActivity.this,
+                    "No connexion found\nPlease connect your device",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
     }
 
     @Override
