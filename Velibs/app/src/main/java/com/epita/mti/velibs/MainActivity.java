@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
 
         if (networkInfo != null && networkInfo.isConnected()) {
-            FetchData(null);
+            FetchData();
 
             mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
             mRecyclerView.setHasFixedSize(true);
@@ -56,12 +56,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*@Override
+    public void onBackPressed() {
+        FetchData();
+        super.onBackPressed();
+    }*/
+
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = getIntent().getStringExtra(SearchManager.QUERY).toUpperCase();
-            FetchData(query);
+            ArrayList<Velib> compatibleVelibAdresses = new ArrayList<>();
+            SingletonVelib singletonVelib = SingletonVelib.getInstance();
+            for (Velib v : singletonVelib.getVelibs()) {
+                if (v.getFields().getAddress().contains(query))
+                    compatibleVelibAdresses.add(v);
+            }
+            if (compatibleVelibAdresses.size() > 0) {
+                mAdapter.setData(compatibleVelibAdresses);
+                mAdapter.notifyDataSetChanged();
+            }
+            else {
+                mAdapter.setData(singletonVelib.getVelibs());
+                mAdapter.notifyDataSetChanged();
+                Toast.makeText(MainActivity.this, "No result found", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -87,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void FetchData(final String query) {
+    private void FetchData() {
         final SingletonVelib singletonVelib = SingletonVelib.getInstance();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(OpenDataService.ENDPOINT)
@@ -100,21 +120,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<VelibResponse> call, Response<VelibResponse> response) {
                 if (response.isSuccessful()) {
-                    if (query != null) {
-                        ArrayList<Velib> compatibleVelibAdresses = new ArrayList<>();
-                        for (Velib v : response.body().getRecords()) {
-                            if (v.getFields().getAddress().contains(query))
-                                compatibleVelibAdresses.add(v);
-                        }
-                        if (compatibleVelibAdresses.size() > 0)
-                            singletonVelib.setVelibs(compatibleVelibAdresses);
-                        else {
-                            Toast.makeText(MainActivity.this, "No result found", Toast.LENGTH_SHORT).show();
-                            singletonVelib.setVelibs(response.body().getRecords());
-                        }
-                    }
-                    else
-                        singletonVelib.setVelibs(response.body().getRecords());
+                    singletonVelib.setVelibs(response.body().getRecords());
                     mAdapter.setData(singletonVelib.getVelibs());
                     mAdapter.notifyDataSetChanged();
                 }
