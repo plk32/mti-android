@@ -46,9 +46,9 @@ public class PagerActivity extends AppCompatActivity {
             case R.id.action_credit:
                 Toast.makeText(PagerActivity.this, "Credits to :\nOufkir Moussa\nSaint-Genez Lorris", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.first_action:
+            case R.id.share_action:
                 SingletonVelib singletonVelib = SingletonVelib.getInstance();
-                VelibFields velib = singletonVelib.getVelibs().get((int) getIntent().getExtras().get("position")).getFields();
+                VelibFields velib = singletonVelib.getVelibs().get(mVP.getCurrentItem()).getFields();
                 Intent shareIntent = new Intent();
                 shareIntent.setAction(Intent.ACTION_SEND);
                 shareIntent.putExtra(Intent.EXTRA_TEXT, "Go to this velib spot !\n"

@@ -11,7 +11,7 @@
 
     <item
         android:id="@+id/action_credit"
-        android:icon="@drawable/ic_check_circle"
+        android:icon="@drawable/ic_info"
         android:title="@string/credits"
         app:showAsAction="ifRoom" />
 </menu>
