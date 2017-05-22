@@ -1,22 +1,21 @@
 package com.epita.mti.velibs;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
-/**
- * Created by Lorris on 12/05/2017.
- */
 
 public class PlaceholderFragment extends Fragment {
 
@@ -43,8 +42,8 @@ public class PlaceholderFragment extends Fragment {
         String last_update = getArguments().getString("last_update");
         String format_date = ConvertDate(last_update);
 
+        SetIcon(rootView, R.id.status_icon, "status");
         SetTextView(rootView, R.id.name, "name");
-        SetTextView(rootView, R.id.status, "status");
         SetTextView(rootView, R.id.stands, "stands");
         SetTextView(rootView, R.id.available_stands, "available_stands");
         SetTextView(rootView, R.id.address, "address");
@@ -71,8 +70,22 @@ public class PlaceholderFragment extends Fragment {
     private void SetTextView(View rootView, int TextId, String tag) {
         Bundle args = getArguments();
         TextView textView = (TextView) rootView.findViewById(TextId);
-        String value = textView.getText() + " " + args.getString(tag);
-        textView.setText(value);
+        textView.setText(args.getString(tag));
+    }
+
+    private void SetIcon(View rootView, int imageId, String tag) {
+        Bundle args = getArguments();
+        String status = args.getString(tag);
+        ImageView imageView = (ImageView) rootView.findViewById(imageId);
+
+        if (status.equals("OPEN")) {
+            imageView.setImageResource(R.drawable.ic_check_circle);
+            imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.statusOK));
+        }
+        else {
+            imageView.setImageResource(R.drawable.ic_remove_circle);
+            imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.statusKO));
+        }
     }
 
     private String ConvertDate(String last_update) {

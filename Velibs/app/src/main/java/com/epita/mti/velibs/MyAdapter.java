@@ -2,6 +2,7 @@ package com.epita.mti.velibs;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-/**
- * Created by Lorris on 12/05/2017.
- */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private ArrayList<Velib> mDataset;
@@ -65,11 +62,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private void setIcon(ImageView imageView, String status) {
         if (status.equals("OPEN")) {
             imageView.setImageResource(R.drawable.ic_check_circle);
-            imageView.setColorFilter(Color.GREEN);
+            imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.statusOK));
         }
         else {
             imageView.setImageResource(R.drawable.ic_remove_circle);
-            imageView.setColorFilter(Color.RED);
+            imageView.setColorFilter(ContextCompat.getColor(imageView.getContext(), R.color.statusKO));
         }
     }
 }

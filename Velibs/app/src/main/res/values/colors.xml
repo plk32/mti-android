@@ -3,5 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="velibListItem">#93a0f4</color>
+    <color name="colorLink">#40c4ff</color>
+    <color name="velibListItem">#eeeeee</color>
+    <color name="statusOK">#66bb6a</color>
+    <color name="statusKO">#ef5350</color>
+    <color name="white">#ffffff</color>
 </resources>
